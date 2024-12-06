@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convert Jarak to Rupiah - Magang Machine Vision</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">
+        Convert Jarak to Rupiah - Magang Machine Vision
+      </h1>
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+          <div class="card p-4">
+            <h3>Masukkan Jarak (dalam Kilometer)</h3>
+            <div class="mb-3">
+              <label for="jarak" class="form-label">Jarak</label>
+              <input
+                type="number"
+                class="form-control"
+                id="jarak"
+                placeholder="Masukkan jarak dalam kilometer"
+              />
+            </div>
+            <button class="btn btn-primary" onclick="convertToRupiah()">
+              Konversi
+            </button>
+            <p class="mt-4" id="output"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function convertToRupiah() {
+        const jarak = parseFloat(document.getElementById("jarak").value);
+
+        if (isNaN(jarak) || jarak <= 0) {
+          document.getElementById("output").innerText =
+            "Masukkan jarak yang valid.";
+          return;
+        }
+
+        const perjalananBulanan = jarak * 2 * 20; // Total perjalanan dalam 20 hari (pulang-pergi)
+        const kebutuhanLiterBulanan = (perjalananBulanan / 55).toFixed(2); // Dibagi 55 dan hasil dengan 2 angka di belakang koma
+        const totalRupiahBulanan = (kebutuhanLiterBulanan * 12100).toFixed(2); // Harga per liter Rp 12.100
+
+        const perjalananMingguan = jarak * 2 * 5; // Total perjalanan dalam 5 hari (pulang-pergi)
+        const kebutuhanLiterMingguan = (perjalananMingguan / 55).toFixed(2); // Hasil dengan 2 angka di belakang koma
+        const totalRupiahMingguan = (kebutuhanLiterMingguan * 12100).toFixed(2);
+
+        document.getElementById("output").innerText =
+          `Rincian Sebulan:\nLiter: ${kebutuhanLiterBulanan}\nTotal: Rp ${parseFloat(
+            totalRupiahBulanan
+          ).toLocaleString()}\n\n` +
+          `Rincian Seminggu:\nLiter: ${kebutuhanLiterMingguan}\nTotal: Rp ${parseFloat(
+            totalRupiahMingguan
+          ).toLocaleString()}`;
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
